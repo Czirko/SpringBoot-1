@@ -11,22 +11,24 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/userjpa")
 public class UserJPAResource {
     @Autowired
     private PersonDaoService service;
 
 
-    @GetMapping(path = "/users")
+    @GetMapping(path = "/all")
     public List<Person> retrieveAllUsers() {
         return service.getUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public EntityModel<Person> retrieveUser(@PathVariable int id) {
         Person user = service.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("id-" + id));
